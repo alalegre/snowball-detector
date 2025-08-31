@@ -1,0 +1,47 @@
+.create {
+    background-color: #5BC07D;
+    border: none;
+    padding: 15px 32px;
+    width: 200px;
+    height: 123px;
+    border-radius: 12px;
+    font-size: 25px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.container {
+    min-height: 70vh;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.termList {
+    display: flex;
+    list-style-type: none;
+    gap: 15px;
+    flex-direction: row;
+}
+
+.termList li {
+    background-color: bisque;
+    padding: 10px;
+    width: 260px;
+    height: 160px;
+    border-radius: 12px;
+
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
