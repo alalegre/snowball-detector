@@ -2,15 +2,62 @@ import React, { useState } from 'react'
 import ReactDom from 'react-dom'
 import './Modal.css'
 
-export const Modal = ({ open, onClose, children, onSubmit, handleChange, formData, classList }) => {
+export const Modal = ({ open, onClose, children, classList, setChartData, setSessions, setIsOpen }) => {
     if (!open) return null;
 
+    // State for getting information from form
+    const [formData, setFormData] = useState({
+        className: '',
+        topic: '',
+        hoursStudied: 1,
+        studyDate: '',
+        notes: 'N/A',
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: name === "hoursStudied" ? parseInt(value, 10) || 0 : value,  // Converts only 'hoursStudied' value into int
+        });
+    };
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        setSessions(prevSessions => [formData, ...prevSessions]);
+
+        // Clear out the fields
+        setFormData({
+            className: '',
+            topic: '',
+            hoursStudied: 1,
+            studyDate: '',
+            notes: 'N/A',
+        })
+
+        setChartData(prevChartData => {
+            // Check if the class exists in the chart
+            const classExist = prevChartData.find(entry => entry.className === formData.className);
+
+            if (classExist) {
+                // Map through array and update total hours
+                return prevChartData.map(entry =>
+                    entry.className === formData.className
+                        ? { ...entry, totalClassHours: entry.totalClassHours + formData.hoursStudied }  // Create new array with updated hours
+                        : entry  // Return as-is with no changes
+                )
+            } else {
+                // Add a new entry
+                return [...prevChartData, { className: formData.className, totalClassHours: formData.hoursStudied }];
+            }
+
+        });
+        setIsOpen(false);
+    }
 
     return ReactDom.createPortal(
         <>
             <div className="overlay" />
-
-
             <div className='Modal'>
                 <div className="form">
                     <form className='form' onSubmit={onSubmit}>
@@ -26,13 +73,6 @@ export const Modal = ({ open, onClose, children, onSubmit, handleChange, formDat
                                 <option key={index} value={className}>{className}</option>
                             ))}
                         </select>
-                        {/* <input
-                            type='text'
-                            name='className'
-                            placeholder='enter class name...'
-                            value={formData.className}
-                            onChange={handleChange}
-                        /> */}
 
                         <label>enter topic:</label>
                         <input

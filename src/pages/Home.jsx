@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
 import { BrowserRouter, Link, Route, Routes } from "react-router"
-import { TermPage } from './TermPage';
 import { TermCard } from '../components/TermCard';
 
 import './Home.css'
@@ -55,8 +54,4 @@ export const Home = () => {
             </div>
         </div>
     )
-
-
-
-
 }
