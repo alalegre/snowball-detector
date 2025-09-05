@@ -1,12 +1,12 @@
 import React from 'react'
-
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
+import './StudyChart.css'
 
-export const StudyChart = ({ chartData, totalHours, averageHours }) => {
+export const StudyChart = ({ chartData, totalHours, average }) => {
     return (
         <div className="StudyChart">
-            <PieChart width={500} height={500}>
+            <PieChart width={680} height={680}>
                 <Pie
                     dataKey="totalClassHours"
                     nameKey="className"
@@ -14,14 +14,14 @@ export const StudyChart = ({ chartData, totalHours, averageHours }) => {
                     data={chartData}
                     cx="50%"
                     cy="50%"
-                    outerRadius={220}
+                    outerRadius={280}
                     fill="#8884d8"
                     label
                 />
                 <Tooltip />
             </PieChart>
-            <h4>Total hours: {totalHours}</h4>
-            <h5>Average study hours: {averageHours}</h5>
+            <h4 className='total-hours'>{totalHours}h Total</h4>
+            <p>{average}</p>
         </div>
     )
 }

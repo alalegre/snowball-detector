@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Modal } from './Modal';
 
+import './StudyLogs.css'
+
 export const StudyLogs = ({ sessions, classList, onDeleteLog, onAddLog }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -34,8 +36,11 @@ export const StudyLogs = ({ sessions, classList, onDeleteLog, onAddLog }) => {
                     ))}
                 </tbody>
             </table>
-            <button onClick={onClearLogs}>Clear logs</button>
-            <h4 className='add-study' onClick={() => setIsOpen(true)}>+ Add Study Session</h4>
+
+            <div className="buttons">
+                <h4 className='add-study-button' onClick={() => setIsOpen(true)}>+ Add Study Session</h4>
+                <h4 className='clear-logs-button' onClick={onClearLogs}>Clear Logs</h4>
+            </div>
 
             <Modal
                 open={isOpen}

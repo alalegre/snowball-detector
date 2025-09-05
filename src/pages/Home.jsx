@@ -12,7 +12,7 @@ export const Home = () => {
             id: 'fall25',
             name: 'Fall 25',
             termDuration: 'Sep 20 - Dec 12',
-            classes: ['CSE 101', 'CSE 102', 'LIT 81'],
+            classes: ['Artificial Intelligence', 'CSE 130', 'LIT 81'],
         },
         {
             id: 'winter26',

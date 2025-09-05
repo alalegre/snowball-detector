@@ -1,6 +1,6 @@
 .termpage-container {
     display: flex;
-    gap: 100px;
+    gap: 80px;
     justify-content: center; /* centers both children */
     align-items: flex-start;
 
@@ -14,61 +14,4 @@
 .right-side,
 .left-side {
     flex: none; /* don’t grow/shrink, just take their content size */
-}
-
-.classList {
-    list-style-type: none;
-    font-size: 50px;
-    display: flex;
-    gap: 50px;
-    margin: 0px;
-    padding: 0px;
-
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.classList li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: #FFF3E6;
-    border-radius: 12px;
-    width: 250px;
-    height: 150px;
-}
-
-.add-study {
-  text-align: left;   /* align the text inside itself */
-  margin-top: 1rem;   /* optional spacing */
-  cursor: pointer;
-  color: green;
-}
-
-.add-study:hover {
-    text-decoration: underline;
-}
-
-.add-class {
-    background-color: #5BC07D;
-    border: none;
-    padding: 15px 32px;
-    width: 150px;
-    height: 92px;
-    border-radius: 12px;
-    font-size: 15px;
-}
-
-.temp-circle {
-    height: 550px;
-    width: 550px;
-    border-radius: 500px;
-    background-color: black;
-}
-
-.log-row:hover {
-    background-color: rgb(255, 109, 109);
-    cursor: pointer;
 }

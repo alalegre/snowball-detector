@@ -115,12 +115,13 @@ export const TermPage = () => {
         setTotalHours(sum);
 
         // Set average hours spent
-        const average = chartData.length > 0 ? sum / chartData.length : 0;
-        setAverageHours(average);
+        const averageHours = chartData.length > 0 ? sum / chartData.length : 0;
+        const toleranceMargin = averageHours * 0.8;
+        setAverageHours(toleranceMargin);
 
         // Compare each class hours to average and flag if needed
         if (chartData.length > 1) {
-            const belowAverage = chartData.filter(entry => entry.totalClassHours < average);
+            const belowAverage = chartData.filter(entry => entry.totalClassHours < toleranceMargin);
             setFlagForSnowball(belowAverage.length > 0);
             setFlaggedClasses(belowAverage.map(entry => entry.className));
         }
@@ -138,7 +139,7 @@ export const TermPage = () => {
                     <StudyChart
                         chartData={chartData}
                         totalHours={totalHours}
-                        averageHours={averageHours}
+                        average={averageHours}
                     />
                     <FlaggedClasses
                         flaggedClasses={flaggedClasses}
