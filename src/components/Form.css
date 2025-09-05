@@ -1,4 +1,0 @@
-.form,
-.right-side {
-    flex: none; /* don’t grow/shrink, just take their content size */
-}

@@ -27,7 +27,7 @@ export const TermPage = () => {
     const [flagForSnowball, setFlagForSnowball] = useState(false);
 
     // Data for charts
-    const [chartData, setChartData] = useState(() => {
+    const [chartData, setChartData] = useState(() => {  // Will store data in {className: 'class_name', totalClassHours: number} format
         try {
             return JSON.parse(localStorage.getItem("chartData")) || [];
         } catch {
@@ -44,6 +44,7 @@ export const TermPage = () => {
         }
     });
 
+    // -- Utilities --
     const saveSessions = (sessions) => {
         localStorage.setItem("sessions", JSON.stringify(sessions));
     }
@@ -52,23 +53,58 @@ export const TermPage = () => {
         localStorage.setItem("chartData", JSON.stringify(chartData));
     }
 
-    // Occurs everytime there's a change in the total hours
+    // -- Handlers --
+    const handleDeleteLog = (index) => {
+        // Get hours and className from row first before deleting it
+        const hoursToDelete = sessions[index].hoursStudied;
+        const classToDelete = sessions[index].className;
+
+        // Update total hours in chartData accordingly
+        setChartData(prevChartData => prevChartData.map(entry =>
+            entry.className === classToDelete
+                ? { ...entry, totalClassHours: entry.totalClassHours - hoursToDelete }
+                : entry
+        ))
+
+        // Update the log list
+        const updatedSessions = sessions.filter((_, i) => i !== index);  // Create new array by filtering out the old
+        setSessions(updatedSessions);
+    }
+
+    const handleAddLog = (newLog) => {
+        setSessions(prevSessions => [newLog, ...prevSessions]);  // Newly added log gets added on top
+        setChartData(prevChartData => {
+            // Check if the class exists in the chart
+            const classExist = prevChartData.find(entry => entry.className === newLog.className);
+
+            if (classExist) {
+                // Map through array and update total hours
+                return prevChartData.map(entry =>  // Create a new array with new values
+                    entry.className === newLog.className
+                        ? { ...entry, totalClassHours: entry.totalClassHours + newLog.hoursStudied }  // Add current entry with updated hours
+                        : entry  // Return as-is with no changes
+                )
+            } else {
+                // Add a new entry to the array
+                return [...prevChartData, { className: newLog.className, totalClassHours: newLog.hoursStudied }];
+            }
+        });
+    }
+
+
+    // Deletes a class from the list if there's 0 study hours
     useEffect(() => {
-        // Deletes a class from the list if there's 0 study hours
-        const updatedSessions = sessions.filter((sesh, i) => sesh.hoursStudied !== 0);
+        const updatedSessions = sessions.filter(sesh => sesh.hoursStudied !== 0);
         setSessions(updatedSessions);
         saveSessions(updatedSessions)
 
-        const updatedChartData = chartData.filter((x, i) => x.totalClassHours !== 0);
+        const updatedChartData = chartData.filter(x => x.totalClassHours !== 0);
         setChartData(updatedChartData);
         saveChartData(updatedChartData);
     }, [totalHours])
 
-    // Occurs when the table is changed
+    // Flags classes that need attention
     useEffect(() => {
-        saveSessions(sessions);
-        saveChartData(chartData);
-
         // Get total hours for all classes
         let sum = 0;
         if (chartData.length > 0) {
@@ -85,10 +121,10 @@ export const TermPage = () => {
         // Compare each class hours to average and flag if needed
         if (chartData.length > 1) {
             const belowAverage = chartData.filter(entry => entry.totalClassHours < average);
-            setFlagForSnowball(true);
+            setFlagForSnowball(belowAverage.length > 0);
             setFlaggedClasses(belowAverage.map(entry => entry.className));
         }
-    }, [sessions, chartData])
+    }, [chartData]);
 
 
     return (
@@ -115,25 +151,11 @@ export const TermPage = () => {
                     <StudyLogs
                         sessions={sessions}
                         classList={term.classes}
-                        setChartData={setChartData}
-                        setSessions={setSessions}
+                        onDeleteLog={handleDeleteLog}
+                        onAddLog={handleAddLog}
                     />
                 </div>
             </div>
         </div>
     )
 }
-
-
-
-// What I can do now to further clean my code and avoid redundancy:
-
-/*
-    - Create functions like "handleAddLog" to make sure setSessions and setChartData are private to TermPage
-        <StudyLogs 
-            sessions={sessions}
-            onDeleteLog={handleDeleteLog}
-            onClearLogs={handleClearLogs}
-            onAddLog={handleAddLog}
-        />
-*/
