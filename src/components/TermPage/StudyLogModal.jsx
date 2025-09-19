@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDom from 'react-dom'
-import './Modal.css'
+import './StudyLogModal.css'
 
-export const Modal = ({ open, onClose, classList, onAddLog }) => {
+export const StudyLogModal = ({ open, onClose, classesData, onAddLog }) => {
     if (!open) return null;
 
     // State for getting information from form
     const [formData, setFormData] = useState({
         className: '',
+        class_id: '',
         topic: '',
         hoursStudied: 1,
         studyDate: '',
@@ -16,10 +17,20 @@ export const Modal = ({ open, onClose, classList, onAddLog }) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: name === "hoursStudied" ? parseInt(value, 10) || 0 : value,  // Converts only 'hoursStudied' value into int
-        });
+
+        if (name === "className") {
+            const selectedClass = classesData.find(cls => cls.class_name === value);
+            setFormData({
+                ...formData,
+                className: value,
+                class_id: selectedClass.class_id,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: name === "hoursStudied" ? parseInt(value, 10) || 0 : value,  // Converts only 'hoursStudied' value into int
+            });
+        }
     };
 
     const handleSubmit = (event) => {
@@ -28,6 +39,7 @@ export const Modal = ({ open, onClose, classList, onAddLog }) => {
 
         setFormData({
             className: '',
+            class_id: '',
             topic: '',
             hoursStudied: 1,
             studyDate: '',
@@ -50,8 +62,8 @@ export const Modal = ({ open, onClose, classList, onAddLog }) => {
                         required
                     >
                         <option value="" defaultValue disabled="disabled">-- Select Class --</option>
-                        {classList.map((className, index) => (
-                            <option key={index} value={className}>{className}</option>
+                        {classesData && classesData.map((cls) => (
+                            <option key={cls.class_id} value={cls.class_name}>{cls.class_name}</option>
                         ))}
                     </select>
 

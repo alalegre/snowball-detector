@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Modal } from './Modal';
+import { StudyLogModal } from './StudyLogModal';
 
 import './StudyLogs.css'
 
-export const StudyLogs = ({ sessions, classList, onDeleteLog, onAddLog }) => {
+export const StudyLogs = ({ sessions, classesData, onDeleteLog, onAddLog }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const onClearLogs = () => {
@@ -27,10 +27,10 @@ export const StudyLogs = ({ sessions, classList, onDeleteLog, onAddLog }) => {
                 <tbody>
                     {sessions.map((session, index) => (
                         <tr className="log-row" key={index} onClick={() => onDeleteLog(index)}>
-                            <td>{session.className}</td>
+                            <td>{session.class_name}</td>
                             <td>{session.topic}</td>
-                            <td>{session.hoursStudied}</td>
-                            <td>{session.studyDate}</td>
+                            <td>{session.num_hours}</td>
+                            <td>{session.date}</td>
                             <td>{session.notes}</td>
                         </tr>
                     ))}
@@ -42,10 +42,10 @@ export const StudyLogs = ({ sessions, classList, onDeleteLog, onAddLog }) => {
                 <h4 className='clear-logs-button' onClick={onClearLogs}>Clear Logs</h4>
             </div>
 
-            <Modal
+            <StudyLogModal
                 open={isOpen}
                 onClose={() => setIsOpen(false)}
-                classList={classList}
+                classesData={classesData}
                 onAddLog={onAddLog}
             />
         </div>

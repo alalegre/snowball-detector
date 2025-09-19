@@ -1,7 +1,16 @@
+.header {
+    font-size: 50px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.subheader {
+
+}
+
 .create {
     background-color: #5BC07D;
     border: none;
-    padding: 15px 32px;
     width: 200px;
     height: 123px;
     border-radius: 12px;
@@ -18,7 +27,6 @@ button:hover {
 .container {
     min-height: 70vh;
     display: flex;
-    gap: 15px;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -27,8 +35,11 @@ button:hover {
 .termList {
     display: flex;
     list-style-type: none;
-    gap: 15px;
+    gap: 30px;
     flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
 }
 
 .termList li {

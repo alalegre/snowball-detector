@@ -34,3 +34,7 @@ lerna-debug.log*
 
 # Misc
 *.tsbuildinfo
+
+client.js
+CreateAccount.jsx
+Login.jsx

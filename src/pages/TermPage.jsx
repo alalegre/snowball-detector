@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { useParams, useLocation } from 'react-router';
+import { useParams } from 'react-router';
 
 import './TermPage.css'
 
@@ -9,22 +9,57 @@ import { ClassCard } from '../components/TermPage/ClassCard';
 import { StudyLogs } from '../components/TermPage/StudyLogs';
 import { FlaggedClasses } from '../components/TermPage/FlaggedClasses';
 import { StudyChart } from '../components/TermPage/StudyChart';
+import { supabase } from '../client';
 
 
 export const TermPage = () => {
     // Acquires the term passed from Home.jsx
-    const location = useLocation();
-    const term = location.state?.term;
     const { termID } = useParams();
-
-    if (!term) {
-        return <h2>No term data available for {termID}</h2>;
-    }
-
+    const [classesData, setClassesData] = useState([]);
+    const [term, setTerm] = useState({})
     const [totalHours, setTotalHours] = useState(0);
     const [averageHours, setAverageHours] = useState(0);
     const [flaggedClasses, setFlaggedClasses] = useState([]);
     const [flagForSnowball, setFlagForSnowball] = useState(false);
+
+    const [sessions, setSessions] = useState([]);
+
+
+    // Fetch data from supabase    
+    useEffect(() => {
+        const fetchClasses = async () => {
+            const { data } = await supabase
+                .from('classes')
+                .select()
+                .eq('term_id', termID)
+            setClassesData(data)
+            console.log("classesData:", data)
+        }
+        fetchClasses().catch(console.error);
+    }, []);
+
+    useEffect(() => {
+        const fetchTermData = async () => {
+            const { data } = await supabase
+                .from('terms')
+                .select()
+                .eq('term_id', termID)
+            setTerm(data[0]);
+        }
+        fetchTermData().catch(console.error)
+    }, [])
+
+    useEffect(() => {
+        const fetchLogs = async () => {
+            const { data } = await supabase
+                .from('logs')
+                .select()
+                .order('date', { ascending: false });
+            setSessions(data);
+        }
+        fetchLogs().catch(console.error);
+    }, [])
+
 
     // Data for charts
     const [chartData, setChartData] = useState(() => {  // Will store data in {className: 'class_name', totalClassHours: number} format
@@ -35,14 +70,20 @@ export const TermPage = () => {
         }
     });
 
+
+
+
     // Used to keep track of logs
-    const [sessions, setSessions] = useState(() => {
-        try {
-            return JSON.parse(localStorage.getItem("sessions")) || [];
-        } catch {
-            return [];
-        }
-    });
+    // const [sessions, setSessions] = useState(() => {
+    //     try {
+    //         return JSON.parse(localStorage.getItem("sessions")) || [];
+    //     } catch {
+    //         return [];
+    //     }
+    // });
+
+
+
 
     // -- Utilities --
     const saveSessions = (sessions) => {
@@ -52,6 +93,9 @@ export const TermPage = () => {
     const saveChartData = (chartData) => {
         localStorage.setItem("chartData", JSON.stringify(chartData));
     }
+
+
+
 
     // -- Handlers --
     const handleDeleteLog = (index) => {
@@ -71,8 +115,13 @@ export const TermPage = () => {
         setSessions(updatedSessions);
     }
 
-    const handleAddLog = (newLog) => {
-        setSessions(prevSessions => [newLog, ...prevSessions]);  // Newly added log gets added on top
+    const handleAddLog = async (newLog) => {
+        // setSessions(prevSessions => [newLog, ...prevSessions]);  // Newly added log gets added on top
+        await supabase
+            .from('logs')
+            .insert({ class_id: newLog.class_id, class_name: newLog.className, topic: newLog.topic, num_hours: newLog.hoursStudied, date: newLog.date, notes: newLog.notes })
+            .select()
+
         setChartData(prevChartData => {
             // Check if the class exists in the chart
             const classExist = prevChartData.find(entry => entry.className === newLog.className);
@@ -91,6 +140,41 @@ export const TermPage = () => {
         });
     }
 
+    const handleAddClass = async () => {
+        // Re-fetch data for UI update without page refresh
+        const { data } = await supabase
+            .from('classes')
+            .select()
+            .eq('term_id', termID)
+        setClassesData(data)
+    }
+
+
+
+
+    // Flags classes that need attention
+    useEffect(() => {
+        // Get total hours for all classes
+        const sum = chartData.reduce((total, entry) => total + entry.totalClassHours, 0);
+        setTotalHours(sum);
+
+        // Set average hours spent
+        const averageHours = chartData.length > 0 ? sum / chartData.length : 0;
+        const toleranceMargin = averageHours * 0.7;
+        setAverageHours(toleranceMargin);
+
+        // Compare each class hours to average and flag if needed
+        if (chartData.length >= 1) {
+            const belowAverage = chartData.filter(entry => entry.totalClassHours < toleranceMargin);
+
+            setFlagForSnowball(belowAverage.length > 0);
+            setFlaggedClasses(belowAverage.map(entry => entry.className));
+
+        }
+    }, [chartData]);
+
+
+
 
     // Deletes a class from the list if there's 0 study hours
     useEffect(() => {
@@ -103,35 +187,14 @@ export const TermPage = () => {
         saveChartData(updatedChartData);
     }, [totalHours])
 
-    // Flags classes that need attention
-    useEffect(() => {
-        // Get total hours for all classes
-        let sum = 0;
-        if (chartData.length > 0) {
-            for (let i = 0; i < chartData.length; i++) {
-                sum += chartData[i].totalClassHours;
-            }
-        }
-        setTotalHours(sum);
 
-        // Set average hours spent
-        const averageHours = chartData.length > 0 ? sum / chartData.length : 0;
-        const toleranceMargin = averageHours * 0.8;
-        setAverageHours(toleranceMargin);
 
-        // Compare each class hours to average and flag if needed
-        if (chartData.length > 1) {
-            const belowAverage = chartData.filter(entry => entry.totalClassHours < toleranceMargin);
-            setFlagForSnowball(belowAverage.length > 0);
-            setFlaggedClasses(belowAverage.map(entry => entry.className));
-        }
-    }, [chartData]);
 
 
     return (
         <div className="TermPage">
-            <h1>{term.name}</h1>
-            <p>{term.termDuration}</p>
+            <h1>{term.term_name}</h1>
+            <p>{term.term_duration}</p>
             <hr></hr>
 
             <div className="termpage-container">
@@ -148,10 +211,14 @@ export const TermPage = () => {
 
                 </div>
                 <div className="right-side">
-                    <ClassCard termClasses={term.classes} />
+                    <ClassCard
+                        classesData={classesData}
+                        termID={termID}
+                        handleAddClass={handleAddClass}
+                    />
                     <StudyLogs
                         sessions={sessions}
-                        classList={term.classes}
+                        classesData={classesData}
                         onDeleteLog={handleDeleteLog}
                         onAddLog={handleAddLog}
                     />
