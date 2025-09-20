@@ -3,13 +3,13 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import './StudyChart.css'
 
-export const StudyChart = ({ chartData, totalHours, average }) => {
+export const StudyChart = ({ chartData, totalHours }) => {
     return (
         <div className="StudyChart">
             <PieChart width={680} height={680}>
                 <Pie
                     dataKey="totalClassHours"
-                    nameKey="className"
+                    nameKey="class_name"
                     isAnimationActive={true}
                     data={chartData}
                     cx="50%"
@@ -21,7 +21,6 @@ export const StudyChart = ({ chartData, totalHours, average }) => {
                 <Tooltip />
             </PieChart>
             <h4 className='total-hours'>{totalHours}h Total</h4>
-            <p>{average}</p>
         </div>
     )
 }

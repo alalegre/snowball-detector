@@ -9,8 +9,8 @@ export const FlaggedClasses = ({ flaggedClasses, flagForSnowball }) => {
                     <p>Flagged Classes:</p>
                     <ul>
                         {
-                            flaggedClasses.map((className, index) => (
-                                <li key={index}>{className}</li>
+                            flaggedClasses.map((class_name, index) => (
+                                <li key={index}>{class_name}</li>
                             ))
                         }
                     </ul>
