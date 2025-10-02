@@ -14,28 +14,37 @@ export const StudyLogs = ({ sessions, classesData, onDeleteLog, onAddLog }) => {
     return (
         <div className='StudyLogs'>
             <h2>Recent Study Logs:</h2>
-            <table className='t-row'>
-                <thead>
-                    <tr>
-                        <th>Class</th>
-                        <th>Topic</th>
-                        <th># hours</th>
-                        <th>Date</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sessions.map((session, index) => (
-                        <tr className="log-row" key={index} onClick={() => onDeleteLog(index)}>
-                            <td>{session.class_name}</td>
-                            <td>{session.topic}</td>
-                            <td>{session.num_hours}</td>
-                            <td>{session.date}</td>
-                            <td>{session.notes}</td>
+            <div className="table-container">
+                <table className='t-row'>
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Topic</th>
+                            <th># hours</th>
+                            <th>Date</th>
+                            <th>Notes</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {sessions.map((session, index) => (
+                            <tr className="log-row" key={index} onClick={() => onDeleteLog(index)}>
+                                <td>{session.class_name}</td>
+                                <td>{session.topic}</td>
+                                <td>{session.num_hours}</td>
+                                <td>
+                                    {new Date(session.date).toLocaleDateString("en-US", {
+                                        year: "numeric",
+                                        month: "short",
+                                        day: "numeric",
+                                    })}
+                                </td>
+
+                                <td>{session.notes}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             <div className="buttons">
                 <h4 className='add-study-button' onClick={() => setIsOpen(true)}>+ Add Study Session</h4>

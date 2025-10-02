@@ -145,7 +145,6 @@ export const TermPage = () => {
                         flaggedClasses={flaggedClasses}
                         flagForSnowball={flagForSnowball}
                     />
-                    <p>{flaggedClasses}</p>
 
                 </div>
                 <div className="right-side">
