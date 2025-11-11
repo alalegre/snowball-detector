@@ -9,6 +9,7 @@ import { StudyLogs } from '../components/TermPage/StudyLogs';
 import { FlaggedClasses } from '../components/TermPage/FlaggedClasses';
 import { StudyChart } from '../components/TermPage/StudyChart';
 import { supabase } from '../client';
+import { Header } from '../components/Header';
 
 
 export const TermPage = () => {
@@ -18,7 +19,7 @@ export const TermPage = () => {
     const [sessions, setSessions] = useState([]);
 
     // Compute only when log sessions change or when a class is added/deleted
-    const { chartData, totalHours, toleranceMargin } = useMemo(() => {
+    const { chartData, totalHours, toleranceMargin, averageHours } = useMemo(() => {
         const chartData = classesData.map(cls => {
             const total = sessions
                 .filter(session => session.class_id === cls.class_id)
@@ -27,10 +28,12 @@ export const TermPage = () => {
         });
 
         // Compute hours from log data
-        const totalHours = chartData.reduce((total, entry) => total + entry.totalClassHours, 0);
-        const averageHours = chartData.length > 0 ? totalHours / chartData.length : 0;
+        const nonZeroClasses = chartData.filter(entry => entry.totalClassHours > 0);
+        const totalHours = nonZeroClasses.reduce((total, entry) => total + entry.totalClassHours, 0);
+
+        const averageHours = nonZeroClasses.length > 0 ? totalHours / chartData.length : 0;
         const toleranceMargin = averageHours * 0.7;
-        return { chartData, totalHours, toleranceMargin }
+        return { chartData, totalHours, toleranceMargin, averageHours }
     }, [sessions, classesData])
 
     // Compare each class hours to average and flag if needed
@@ -48,7 +51,7 @@ export const TermPage = () => {
             flaggedClasses,
             flagForSnowball: flaggedClasses.length > 0,
         }
-    }, [chartData, toleranceMargin])
+    }, [chartData, toleranceMargin, sessions])
 
     // Fetch data from supabase at first render
     useEffect(() => {
@@ -129,11 +132,11 @@ export const TermPage = () => {
         setClassesData(data)
     }
 
+
     return (
         <div className="TermPage">
-            <h1>{term.term_name}</h1>
-            <p>{term.term_duration}</p>
-            <hr></hr>
+            <Header term={term} />
+            {/* <hr></hr> */}
 
             <div className="termpage-container">
                 <div className="left-side">

@@ -1,25 +1,45 @@
-.termpage-container {
-    display: flex;
-    gap: 80px;
-    justify-content: center; /* centers both children */
-    align-items: flex-start;
-
-    justify-content: center;
-    align-items: center;
-    /* text-align: center; */
-
-    min-height: 70vh;
+.label-text {
+  font-size: 20px;
 }
 
-.left-side,
+.termpage-container {
+  display: flex;
+  gap: 60px;
+  /* min-height: 80vh; */
+  margin-top: 5px;
+  margin-bottom: 25px;
+
+  justify-content: center;
+  align-items: stretch;
+  text-align: center;
+}
+
 .right-side {
-    box-sizing: border-box;
+  /* box-sizing: border-box; */
+  width: 50%;
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .1);
+
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+
+  padding: 20px;
 }
 
 .right-side {
   display: flex;
   flex-direction: column;
-  gap: 20px;       /* spacing between ClassCard and StudyLogs */
-  align-items: center; /* keep content aligned left */
+  gap: 45px;
+  align-items: stretch;
   justify-content: center;
 }

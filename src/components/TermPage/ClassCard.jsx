@@ -15,7 +15,7 @@ export const ClassCard = ({ classesData, termID, handleAddClass }) => {
                         <li key={cls.class_id}>{cls.class_name}</li>
                     ))
                 }
-                <button className='add-class' onClick={() => setIsOpen(true)}>+ Add Class</button>
+                <button className='add-class' onClick={() => setIsOpen(true)}>+</button>
             </ul>
 
             <AddClassModal

@@ -1,12 +1,16 @@
 import React from 'react'
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { Cell, Label, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
 import './StudyChart.css'
 
+
+
+
 export const StudyChart = ({ chartData, totalHours }) => {
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
     return (
         <div className="StudyChart">
-            <PieChart width={680} height={680}>
+            <PieChart width={580} height={580}>
                 <Pie
                     dataKey="totalClassHours"
                     nameKey="class_name"
@@ -14,13 +18,23 @@ export const StudyChart = ({ chartData, totalHours }) => {
                     data={chartData}
                     cx="50%"
                     cy="50%"
-                    outerRadius={280}
-                    fill="#8884d8"
+                    innerRadius="70%"
+                    outerRadius="85%"
+                    cornerRadius="50%"
+                    paddingAngle={5}
                     label
-                />
+                >
+                    {chartData.map((cell, index) => (
+                        <Cell key={`cell-${cell.name}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                </Pie>
+                <Label position="center" fill="#666">
+                    {`${String(totalHours)}h Total Studying`}
+                </Label>
+                <Legend />
+
                 <Tooltip />
             </PieChart>
-            <h4 className='total-hours'>{totalHours}h Total</h4>
         </div>
     )
 }

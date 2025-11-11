@@ -1,23 +1,71 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-
-
 # Snowball Detector
 
-A React + Supabase study tracker to log sessions and visualize study time.
+*A personalized study-tracking dashboard built with React, Recharts, and Supabase.*
 
-## Motivation
+## Overview
 
-Throughout my academic career, I always notice that I'm behind in one or more of my classes when it's too late. I think to myself when that happened and how I can prevent it. So, I decided to build a web app that visualizes how I spend my time in each of my classes.
+**Snowball Detector** is a web application I built to track my study sessions and visualize how I distribute time accross classes.
 
+The App flags under-prioritized courses by analyzing logged study sessions and dynamic charts to highlight study imbalances.
+
+This project is intended for personal use and runs locally. It is not deployed publicly.
+
+## Features
+- Session Logging — Add, edit, and remove study sessions with class, duration, and timestamp.
+- Dynamic Visualization — Uses **Recharts** to display total study hours and trends accross subjects.
+- Prioritization Detection — Highlights classes that have been under-studied relative to others.
+- Persistent Storage — Stores data in **Supabase**, allowing secure and scalable data management.
+
+## Tech Stack
+
+- **Frontend:** React, HTML, CSS, JavaScript
+- **Charts:** Recharts
+- **Backend:** Supabase
+
+## Setup Instructions
+
+> This project is intended for personal/local use (as of now). You'll need a Supabase project and API keys.
+
+### 1. Clone the repository
+```
+git clone git@github.com:alalegre/snowball-detector.git
+cd snowball-detector
+```
+### 2. Install dependencies
+```
+npm install
+```
+
+### 3. Configure environment variables
+Create a `client.js` file in the `src` folder and copy this inside:
+
+```
+import { createClient } from '@supabase/supabase-js'
+
+const URL = '<your URL>';
+const API_KEY = '<your API>';
+export const supabase = createClient(URL, API_KEY);
+```
+
+### 4. Start the development server
+
+```
+npm run dev
+```
+
+## How it Works
+
+- Each study session is logged with a class name, topic, study duration, date, and notes about the study session.
+- The app aggregates total hours per class and displays them in charts using Recharts
+- Classes with significantly lower total hours are flagged as "**under-prioritized**".
+- Data is persisted in Supabase and fetched via client-side API calls.
+
+## Future Improvements
+- [ ] Add weekly/monthly view toggles
+- [ ] Implement authentication for multi-user support
+- [ ] Deploy publicly once authenticated version is ready
+- [ ] Add feature to track class attendance by day
+- [ ] Implement weekly data tracking that resets each week while allowing users to view past weeks' summaries
+
+## License
+This project is for personal use only and is not licensed for public redistribution.

@@ -33,31 +33,44 @@ export const AddClassModal = ({ open, onClose, termID, handleAddClass }) => {
     return (
         <>
             <div className="addclass-overlay" />
+
             <div className='addClassModal'>
-                <form className='form' onSubmit={createClass}>
-                    <label>enter class name:</label>
-                    <input
-                        type='text'
-                        name='class_name'
-                        value={course.class_name}
-                        onChange={handleChange}
-                        required
-                    />
+                <div className="form">
+                    <form className='formContent' onSubmit={(e) => {
+                        e.preventDefault();
 
-                    <label>enter class code:</label>
-                    <input
-                        type='text'
-                        name='class_id'
-                        placeholder='e.g. cse30'
-                        value={course.class_id}
-                        onChange={handleChange}
-                        required
-                    />
+                        const form = e.target;
+                        if (!form.checkValidity()) {
+                            form.reportValidity(); // triggers the native popup
+                            return;
+                        }
 
-                    <input type='submit' value='Submit' />
-                </form>
+                        createClass();
+                    }}>
+                        <label>Class:</label>
+                        <input
+                            type='text'
+                            name='class_name'
+                            value={course.class_name}
+                            onChange={handleChange}
+                            required
+                        />
 
-                <button onClick={onClose}>Close</button>
+                        <label>Class Code:</label>
+                        <input
+                            type='text'
+                            name='class_id'
+                            placeholder='e.g. cse30'
+                            value={course.class_id}
+                            onChange={handleChange}
+                            required
+                        />
+                    </form>
+                </div>
+                <div className="buttons">
+                    <button type="submit">Submit</button>
+                    <button type='button' onClick={onClose}>Close</button>
+                </div>
             </div>
         </>
     )

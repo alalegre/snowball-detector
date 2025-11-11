@@ -13,7 +13,10 @@ export const StudyLogs = ({ sessions, classesData, onDeleteLog, onAddLog }) => {
 
     return (
         <div className='StudyLogs'>
-            <h2>Recent Study Logs:</h2>
+            <div className="table-header">
+                <h2>Recent Study Logs:</h2>
+                <img src='../public/three-dots.png' />
+            </div>
             <div className="table-container">
                 <table className='t-row'>
                     <thead>
@@ -48,7 +51,7 @@ export const StudyLogs = ({ sessions, classesData, onDeleteLog, onAddLog }) => {
 
             <div className="buttons">
                 <h4 className='add-study-button' onClick={() => setIsOpen(true)}>+ Add Study Session</h4>
-                <h4 className='clear-logs-button' onClick={onClearLogs}>Clear Logs</h4>
+                {/* <h4 className='clear-logs-button' onClick={onClearLogs}>Clear Logs</h4> */}
             </div>
 
             <StudyLogModal

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './FlaggedClasses.css'
+
 export const FlaggedClasses = ({ flaggedClasses, flagForSnowball }) => {
 
     return (
