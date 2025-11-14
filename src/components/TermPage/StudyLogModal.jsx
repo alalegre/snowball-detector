@@ -50,54 +50,65 @@ export const StudyLogModal = ({ open, onClose, classesData, onAddLog }) => {
     return ReactDom.createPortal(
         <>
             <div className="overlay" />
-            <div className='Modal'>
+
+
+            <div className='StudyLogModal'>
+                <img src='../public/notes.png' className='notes' />
+                <img src='../public/close.png' className='exit-studylog' onClick={onClose} />
+                <h4>Add a new study session</h4>
+
                 <form className='form' onSubmit={handleSubmit}>
-                    <label>enter class name:</label>
-                    <select
-                        value={formData.class_name}
-                        onChange={handleChange}
-                        name='class_name'
-                        required
-                    >
-                        <option value="" defaultValue disabled="disabled">-- Select Class --</option>
-                        {classesData && classesData.map((cls) => (
-                            <option key={cls.class_id} value={cls.class_name}>{cls.class_name}</option>
-                        ))}
-                    </select>
+                    <div className="form-inputs">
+                        <div className="class-name">
+                            <label>Class</label>
+                            <select
+                                value={formData.class_name}
+                                onChange={handleChange}
+                                name='class_name'
+                                required
+                            >
+                                <option value="" defaultValue disabled="disabled">— Select Class —</option>
+                                {classesData && classesData.map((cls) => (
+                                    <option key={cls.class_id} value={cls.class_name}>{cls.class_name}</option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <label>enter topic:</label>
-                    <input
-                        type='text'
-                        name='topic'
-                        placeholder='enter topic...'
-                        value={formData.topic}
-                        onChange={handleChange}
-                        required
-                    />
+                        <div className="topic"><label>Topic</label>
+                            <input
+                                type='text'
+                                name='topic'
+                                placeholder='enter topic...'
+                                value={formData.topic}
+                                onChange={handleChange}
+                                required
+                            /></div>
 
-                    <label>enter hours of studied:</label>
-                    <input
-                        type='number'
-                        min="1"
-                        name='num_hours'
-                        placeholder='enter hours of studied...'
-                        value={formData.num_hours}
-                        onChange={handleChange}
-                    />
 
-                    <label>enter notes:</label>
-                    <input
-                        type='text'
-                        name='notes'
-                        placeholder='enter notes...'
-                        value={formData.notes}
-                        onChange={handleChange}
-                    />
+                        <div className="hours-studied"><label>Hours Studied</label>
+                            <input
+                                type='number'
+                                min="1"
+                                name='num_hours'
+                                placeholder='enter hours of studied...'
+                                value={formData.num_hours}
+                                onChange={handleChange}
+                            /></div>
 
-                    <input type='submit' value='Submit' />
+                        <div className="enter-notes"><label>Notes</label>
+                            <input
+                                type='text'
+                                name='notes'
+                                placeholder='enter notes...'
+                                value={formData.notes}
+                                onChange={handleChange}
+                            /></div>
+                    </div>
                 </form>
 
-                <button onClick={onClose}>Close Modal</button>
+                <div >
+                    <button className="submit-button" type="submit">Add Study Session</button>
+                </div>
             </div>
         </>,
         document.getElementById('portal')  // Renders outside parent dom to prevent issues

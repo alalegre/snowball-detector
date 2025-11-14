@@ -42,7 +42,7 @@
   flex-direction: column;
 
   width: 25em;
-  height: 30em;
+  height: auto;
 
   position: fixed;
   top: 50%;
@@ -58,7 +58,6 @@
 
 .classLabel input, .classCodeLabel input {
   border: none;
-  /* width: 15em; */
   height: auto;
 
   background-color: rgb(243, 243, 243);
