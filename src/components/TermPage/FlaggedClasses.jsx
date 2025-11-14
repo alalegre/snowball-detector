@@ -8,7 +8,7 @@ export const FlaggedClasses = ({ flaggedClasses, flagForSnowball }) => {
         <div className="FlaggedClasses">
             {flagForSnowball &&
                 <div>
-                    <p>Flagged Classes:</p>
+                    <p>Under-prioritized Classes:</p>
                     <ul>
                         {
                             flaggedClasses.map((class_name, index) => (

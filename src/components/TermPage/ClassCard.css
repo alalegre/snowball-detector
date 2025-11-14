@@ -7,6 +7,22 @@
     box-shadow: 0 5px 20px rgba(0, 0, 0, .1);
 }
 
+.edit-button {
+    display: flex;
+    justify-content: right;
+}
+
+.edit-button img {
+    width: auto;
+    height: 20px;
+
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+
+.edit-button img:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
 
 .classList {
     list-style-type: none;

@@ -46,6 +46,8 @@ const URL = '<your URL>';
 const API_KEY = '<your API>';
 export const supabase = createClient(URL, API_KEY);
 ```
+Then go to Supabase, create a new project and acquire the URL and API.
+Replace `<your URL>` with the URL and `<your API>` with the API.
 
 ### 4. Start the development server
 

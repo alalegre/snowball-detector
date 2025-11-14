@@ -18,12 +18,12 @@
     height: 20px;
     width: auto;
     /* margin-right: 20px; */
-    cursor: pointer;
     transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
 }
 
 .table-header img:hover {
     transform: scale(1.2);
+    cursor: pointer;
 }
 
 
@@ -37,7 +37,7 @@ tr:nth-child(even) {
 }
 
 .table-container {
-    max-height: 300px;
+    max-height: 25em;
     overflow-y: auto;
     width: 100%;
     margin: 0 auto;

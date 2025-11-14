@@ -4,45 +4,122 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.75);
   z-index: 1000;
 }
+
+.exit {
+  width: auto;
+  height: 20px;
+  position: absolute;
+
+  top: 5%;
+  left: 90%;
+
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+
+.exit:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.open-book {
+  height: auto;
+  width: 100px;
+  opacity: 55%;
+}
+
+.addClassModal h4 {
+  margin-top: 5px;
+}
+
 
 .addClassModal {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   flex-direction: column;
+
+  width: 25em;
+  height: 30em;
 
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  padding: 65px 30px;
+  padding: 65px 45px;
   z-index: 1000;
 
-  border-radius: 40px 5px 40px 5px;
+  border-radius: 40px;
   text-align: left;
 }
 
-.addClassModal input {
+.classLabel input, .classCodeLabel input {
   border: none;
-  width: 10em;
+  /* width: 15em; */
   height: auto;
+
+  background-color: rgb(243, 243, 243);
 }
 
 .addClassModal input[type=text] {
-  border-bottom: 1px solid black;
+  font-size: 15px;
+
+  margin-top: 10px;
+
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 15px;
+  height: 2.5rem;
+  width: 20em;
+  padding: 0.5rem 1rem;
 }
 
 .formContent {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
   width: 100%;
+  width: 5em;
+  font-size: 18px;
 }
 
+
+form .inputs {
+  display: flex;
+  justify-content: center;
+  text-align: left;
+  flex-direction: column;
+  gap: 80px;
+
+  color: rgb(95, 95, 95);
+}
+
+
 .buttons button {
-  border: none;
-  margin-top: 10px;
+  background-color: transparent;
+  border: 2px solid #5BC07D;
+  border-radius: 15px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 0px 0px;
+  text-align: center;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  width: 100%;
+  min-width: 10em;
+  padding: 5px 10px 5px 10px;
+  margin-top: 45px;
+}
+
+.buttons button:hover {
+  color: white;
+  background-color: #5BC07D;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 8px 15px;
+
+  transform: scale(1.1);
 }

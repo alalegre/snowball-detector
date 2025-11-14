@@ -35,6 +35,9 @@ export const AddClassModal = ({ open, onClose, termID, handleAddClass }) => {
             <div className="addclass-overlay" />
 
             <div className='addClassModal'>
+                <img src='../public/close.png' className='exit' onClick={onClose} />
+                <img src='../public/open-book.png' className='open-book' />
+                <h4>Add a new class</h4>
                 <div className="form">
                     <form className='formContent' onSubmit={(e) => {
                         e.preventDefault();
@@ -47,29 +50,36 @@ export const AddClassModal = ({ open, onClose, termID, handleAddClass }) => {
 
                         createClass();
                     }}>
-                        <label>Class:</label>
-                        <input
-                            type='text'
-                            name='class_name'
-                            value={course.class_name}
-                            onChange={handleChange}
-                            required
-                        />
 
-                        <label>Class Code:</label>
-                        <input
-                            type='text'
-                            name='class_id'
-                            placeholder='e.g. cse30'
-                            value={course.class_id}
-                            onChange={handleChange}
-                            required
-                        />
+                        <div className="inputs">
+                            <div className="classLabel">
+                                <label>Class</label>
+                                <input
+                                    type='text'
+                                    name='class_name'
+                                    placeholder='Enter your class name'
+                                    value={course.class_name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className="classCodeLabel">
+                                <label>Class Code</label>
+                                <input
+                                    type='text'
+                                    name='class_id'
+                                    placeholder='e.g. cse30'
+                                    value={course.class_id}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div className="buttons">
-                    <button type="submit">Submit</button>
-                    <button type='button' onClick={onClose}>Close</button>
+                    <button type="submit">Add Class</button>
                 </div>
             </div>
         </>

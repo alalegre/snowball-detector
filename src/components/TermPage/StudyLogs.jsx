@@ -30,7 +30,8 @@ export const StudyLogs = ({ sessions, classesData, onDeleteLog, onAddLog }) => {
                     </thead>
                     <tbody>
                         {sessions.map((session, index) => (
-                            <tr className="log-row" key={index} onClick={() => onDeleteLog(index)}>
+                            // <tr className="log-row" key={index} onClick={() => onDeleteLog(index)}>
+                            <tr className="log-row" key={index}>
                                 <td>{session.class_name}</td>
                                 <td>{session.topic}</td>
                                 <td>{session.num_hours}</td>

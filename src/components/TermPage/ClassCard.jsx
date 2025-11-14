@@ -8,7 +8,9 @@ export const ClassCard = ({ classesData, termID, handleAddClass }) => {
 
     return (
         <div className="ClassCard">
-
+            <div className="edit-button">
+                <img src='../public/three-dots.png' />
+            </div>
             <ul className='classList'>
                 {classesData &&
                     classesData.map((cls) => (
