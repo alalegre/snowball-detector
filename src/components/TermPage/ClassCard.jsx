@@ -11,14 +11,24 @@ export const ClassCard = ({ classesData, termID, handleAddClass }) => {
             <div className="edit-button">
                 <img src='../public/three-dots.png' />
             </div>
-            <ul className='classList'>
-                {classesData &&
-                    classesData.map((cls) => (
-                        <li key={cls.class_id}>{cls.class_name}</li>
-                    ))
-                }
-                <button className='add-class' onClick={() => setIsOpen(true)}>+</button>
-            </ul>
+
+            {classesData && classesData.length > 0 ? (
+                <>
+                    <ul className='classList'>
+                        {
+                            classesData.map((cls) => (
+                                <li key={cls.class_id}>{cls.class_name}</li>
+                            ))
+                        }
+                        <button className='add-class' onClick={() => setIsOpen(true)}>+</button>
+                    </ul>
+                </>
+            ) : (
+                <div className="no-classes">
+                    <h3>No classes. Add some!</h3>
+                    <button className='add-class' onClick={() => setIsOpen(true)}>+</button>
+                </div>
+            )}
 
             <AddClassModal
                 open={isOpen}

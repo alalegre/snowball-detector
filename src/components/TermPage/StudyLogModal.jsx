@@ -59,6 +59,7 @@ export const StudyLogModal = ({ open, onClose, classesData, onAddLog }) => {
 
                 <form className='form' onSubmit={handleSubmit}>
                     <div className="form-inputs">
+
                         <div className="class-name">
                             <label>Class</label>
                             <select
@@ -103,12 +104,11 @@ export const StudyLogModal = ({ open, onClose, classesData, onAddLog }) => {
                                 value={formData.notes}
                                 onChange={handleChange}
                             /></div>
+
+                        <button className="submit-button" type="submit">Add Study Session</button>
+
                     </div>
                 </form>
-
-                <div >
-                    <button className="submit-button" type="submit">Add Study Session</button>
-                </div>
             </div>
         </>,
         document.getElementById('portal')  // Renders outside parent dom to prevent issues

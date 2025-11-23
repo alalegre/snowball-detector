@@ -21,7 +21,7 @@ export const AddClassModal = ({ open, onClose, termID, handleAddClass }) => {
     }
 
     const createClass = async (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         await supabase
             .from('classes')
             .insert({ class_id: course.class_id, term_id: termID, class_name: course.class_name })
@@ -75,12 +75,13 @@ export const AddClassModal = ({ open, onClose, termID, handleAddClass }) => {
                                     required
                                 />
                             </div>
+                            <button type="submit" className='buttons' >Add Class</button>
                         </div>
                     </form>
                 </div>
-                <div className="buttons">
-                    <button type="submit">Add Class</button>
-                </div>
+                {/* <div className="buttons">
+
+                </div> */}
             </div>
         </>
     )

@@ -1,11 +1,14 @@
 import React from 'react'
 import { Cross as Hamburger } from 'hamburger-react'
+import { useNavigate } from 'react-router-dom'
 
 import './Header.css'
 
 export const Header = ({ term }) => {
+    const navigate = useNavigate();
+
     const handleHomeButton = () => {
-        // Go back to home page
+        navigate('/');
     }
 
     return (

@@ -42,7 +42,7 @@ tr:nth-child(even) {
     width: 100%;
     margin: 0 auto;
 
-    border-radius: 15px 15px 0px 15px;
+    border-radius: 15px;
 }
 
 
@@ -71,7 +71,7 @@ tr:nth-child(even) {
 }
 
 
-
+/* TABLE */
 .t-row {
     width: 100%;
     border-collapse: collapse;
